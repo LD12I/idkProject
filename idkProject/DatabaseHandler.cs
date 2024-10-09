@@ -64,7 +64,44 @@ namespace idkProject
             }
         }
 
+        public void insertOneItem(game onegame)
+        {
+            try
+            {
+                connection.Open();
+                string query = $"insert into games (id,name, type, price) values ('','{onegame.name}',{onegame.type},{onegame.price})";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.ExecuteNonQuery();
+                command.Dispose();
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error: " + e.Message);
+            }
 
+
+
+
+
+        }
+        public void deleteOneitem(int id)
+        {
+            try
+            {
+                connection.Open();
+                string query = $"delete from games where id='{id}'";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.ExecuteNonQuery();
+                command.Dispose();
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show(e.Message);
+            }
+        }
 
     }
 

@@ -22,6 +22,7 @@ namespace idkProject
         public Form1()
         {
             InitializeComponent();
+            HideAdd();
             games = db.ReadAll();
             Border.BackColor = Color.LightBlue;
 
@@ -29,6 +30,28 @@ namespace idkProject
             {
                 GameAdd(games[i].name, games[i].id);
             }
+
+
+            gameaddB.Click += (s, e) =>{
+                ShowAdd();
+                game onegame = new game();
+                onegame.name = GameNameTB.Text;
+                onegame.type = GameTypeTB.Text;
+                onegame.price =Convert.ToInt32(GamePriceTB.Text);
+
+                db.insertOneItem(onegame);
+            };
+
+            gamedeleteB.Click += (s, e) =>
+            {
+                if (selecteditem != null)
+                {
+                    db.deleteOneitem(selecteditem -1);
+                    
+                }
+            };
+
+
 
 
         }
@@ -59,8 +82,7 @@ namespace idkProject
 
             GameP.Click += (s, e) =>
             {
-                GameP.Tag = selecteditem;
-                MessageBox.Show(GameP.Tag.ToString());
+                selecteditem = Convert.ToInt32(GameP.Tag)-1;
                 for (int i = 0; i < games.Count; i++)
                 {
                     properties.Text = $"Game Name: {games[selecteditem].name} \nGame type: {games[selecteditem].type} \nGame price: {games[selecteditem].price}";
@@ -93,7 +115,27 @@ namespace idkProject
             Bottomor = !Bottomor;
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
 
 
+
+        void ShowAdd()
+        {
+            AddL.Show();
+            GameNameTB.Show();
+            pictureBox1.Show();
+            AddB.Show();
+        }
+
+        void HideAdd()
+        {
+            AddL.Hide();
+            GameNameTB.Hide();
+            pictureBox1.Hide();
+            AddB.Hide();
+        }
     }
 }
